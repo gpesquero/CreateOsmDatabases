@@ -3,16 +3,10 @@ package CreateOsmDatabases;
 import java.io.File;
 import java.io.FilenameFilter;
 
+import org.utilslibrary.OsmDatabase;
+import org.utilslibrary.OsmPbfFile;
+
 public class CreateOsmDatabases {
-	
-	// JDBC driver name and database URL
-	//static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
-	//static final String DB_URL = "jdbc:mysql://localhost:3306/";
-	
-	//static final String DB_FILE = "C:/temp/prueba.db";
-	
-	//static final String PBFS_DIR_NAME = "PBFs";
-	//static final String DBS_DIR_NAME = "DBs";
 	
 	static final String PBF_FILE_EXT =".osm.pbf";
 	
@@ -40,31 +34,6 @@ public class CreateOsmDatabases {
 			return;
 		}
 		
-		/*
-		File pbfDir=new File(baseDir, PBFS_DIR_NAME);
-		
-		if (!pbfDir.isDirectory()) {
-			
-			System.out.println("PBF Dir <"+pbfDir.getAbsolutePath()+"> is not a directory. Quitting...");
-			
-			return;
-		}
-		*/
-		
-		/*
-		File dbDir=new File(baseDir, DBS_DIR_NAME);
-		
-		if (!dbDir.isDirectory()) {
-			
-			if (!dbDir.mkdir()) {
-				
-				System.out.println("DB Dir <"+dbDir.getAbsolutePath()+"> cannot be created. Quitting...");
-				
-				return;					
-			}
-		}
-		*/
-		
 		FilenameFilter filter=new FilenameFilter() {
 			
 			public boolean accept(File directory, String fileName) {
@@ -78,7 +47,7 @@ public class CreateOsmDatabases {
 		
 		for(int file=0; file<pbfFiles.length; file++) {
 			
-			OsmPbfFile pbf=new OsmPbfFile();
+			OsmPbfFile pbf = new OsmPbfFile();
 		
 			if (!pbf.openFile(pbfFiles[file].getAbsolutePath())) {
 			
@@ -111,23 +80,15 @@ public class CreateOsmDatabases {
 				return;
 			}
 			
-			//db.createIndexes();	
-			
 			pbf.getObjectCount();
-			
-			//db.runTest();
 			
 			if (!pbf.process(db)) {
 				
 				System.out.println("Error processing PBF File <"+pbfFiles[file].getAbsolutePath()+">. Quitting...");
 				
 				return;
-			}
-			
-			//db.createIndexes();			
+			}		
 		}
-		
-		
 		
 		System.out.println("Finished...");	
 	}
