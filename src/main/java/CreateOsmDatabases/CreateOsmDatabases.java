@@ -1,21 +1,30 @@
 package CreateOsmDatabases;
 
 import java.io.File;
+
 import java.io.FilenameFilter;
+import java.time.Instant;
 
 import org.utilslibrary.Log;
 import org.utilslibrary.OsmDatabase;
 import org.utilslibrary.OsmPbfFile;
+import org.utilslibrary.Util;
 
 public class CreateOsmDatabases {
 	
-	static final String APP_NAME = "CreateOsmDabases";
+	private static final String APP_NAME = "CreateOsmDabases";
+	
+	private final static String APP_VERSION= "0.01";
+	
+	private final static String APP_DATE= "Dec 29th 2020";
 	
 	static final String PBF_FILE_EXT =".osm.pbf";
 	
 	public static void main(String[] args) {
 		
-		Log.info("Starting " + APP_NAME + "...");
+		Log.info("Starting " + APP_NAME + " (v" + APP_VERSION + ", " + APP_DATE + ")...");
+		
+		Instant start = Instant.now();
 		
 		if (args.length < 1) {
 			
@@ -97,6 +106,8 @@ public class CreateOsmDatabases {
 			db.closeDatabase();
 		}
 		
-		Log.info("Finished " + APP_NAME + "...");	
+		Instant end = Instant.now();
+		
+		Log.info(APP_NAME + " finished in " + Util.timeFormat(start, end) + "  !!");	
 	}
 }
